@@ -1,0 +1,16 @@
+#端口号8080
+server:
+  port: 8088
+
+#数据库名：mysql，用户名root，密码123456
+spring:
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/netty?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# mybatis-plus配置
+mybatis-plus:
+  # xml文件位置
+  mapper-locations: classpath:mapper/*.xml
