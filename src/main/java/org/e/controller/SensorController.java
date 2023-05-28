@@ -90,6 +90,8 @@ public class SensorController {
         Ventilator ventilator = new Ventilator();
         ventilator.setTime(new Date());
         ventilator.setSensorId(ventilatorVo.getNid());
+        ventilator.setTidalVolume(ventilatorVo.getTidal_volume());
+        ventilator.setRespiratoryRate(ventilatorVo.getRespiratory_rate());
         BeanUtils.copyProperties(ventilatorVo, ventilator);
         ventilatorService.save(ventilator);
     }

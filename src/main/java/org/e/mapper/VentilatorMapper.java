@@ -1,6 +1,8 @@
 package org.e.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.e.entity.Monitor;
 import org.e.entity.Ventilator;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -14,5 +16,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface VentilatorMapper extends BaseMapper<Ventilator> {
-
+    @Select("select * from ventilator where sensor_id=#{sensorId} order by time desc limit 1;")
+    public Ventilator getData(Integer sensorId);
 }

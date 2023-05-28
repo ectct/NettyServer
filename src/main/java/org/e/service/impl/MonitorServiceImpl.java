@@ -1,5 +1,6 @@
 package org.e.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.e.entity.Monitor;
 import org.e.mapper.MonitorMapper;
 import org.e.service.MonitorService;
@@ -18,4 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MonitorServiceImpl extends ServiceImpl<MonitorMapper, Monitor> implements MonitorService {
 
+    @Autowired
+    MonitorMapper mapper;
+    @Override
+    public Object getData(Integer i) {
+
+        return null;
+    }
 }

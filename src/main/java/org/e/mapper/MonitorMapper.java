@@ -1,6 +1,7 @@
 package org.e.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.e.entity.Monitor;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -14,5 +15,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface MonitorMapper extends BaseMapper<Monitor> {
+    @Select("select * from monitor where sensor_id=#{sensorId} order by time desc limit 1;")
+    public Monitor getData(Integer sensorId);
 
 }

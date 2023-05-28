@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MonitorService extends IService<Monitor> {
 
+    Object getData(Integer i);
 }

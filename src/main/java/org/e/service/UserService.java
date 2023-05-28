@@ -1,7 +1,11 @@
 package org.e.service;
 
+import com.alibaba.fastjson.JSONObject;
 import org.e.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     User getByUsername(String username);
+
+    JSONObject getSensorById(Integer id);
+
+    void updateSenor(Integer userId, List<Integer> subscribe);
 }

@@ -56,10 +56,10 @@ public class JWTUtil {
      * @param jwtToken
      * @return 解析token后获得的用户id
      */
-    public static String getMemberIdByJwtToken(String jwtToken) {
-        if(StringUtils.isEmpty(jwtToken)) return "";
+    public static Integer getMemberIdByJwtToken(String jwtToken) {
+        if(StringUtils.isEmpty(jwtToken)) return -1;
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(jwtToken);
         Claims claims = claimsJws.getBody();
-        return (String)claims.get("id");
+        return (Integer) claims.get("id");
     }
 }

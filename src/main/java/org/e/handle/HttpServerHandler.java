@@ -41,12 +41,14 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
         JSONObject resp = null;
         FullHttpResponse response = null;
         if (json == null) {
-            response = responseOk(HttpResponseStatus.INTERNAL_SERVER_ERROR, null);
-        }
-        else {
+            resp = new JSONObject();
+            resp.put("success", false);
+            resp.put("message", "not post or not json");
+            ByteBuf buf = copiedBuffer(resp.toJSONString());
+            response = responseOk(HttpResponseStatus.INTERNAL_SERVER_ERROR, buf);
+        } else {
             log.info(json.toJSONString());
             log.info(request.uri().trim());
-            log.info(json.getString("a"));
             resp = userController.select(request.uri().trim(), json);
             ByteBuf buf = copiedBuffer(resp.toJSONString());
             response = responseOk(HttpResponseStatus.OK, buf);
@@ -62,10 +64,8 @@ public class HttpServerHandler extends SimpleChannelInboundHandler<FullHttpReque
     private FullHttpResponse responseOk(HttpResponseStatus status, ByteBuf buf) {
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
                 status,buf);
-        if(buf != null){
-            response.headers().set("Content-Type","application/json");
-            response.headers().set("Content-Length",response.content().readableBytes());
-        }
+        response.headers().set("Content-Type","application/json");
+        response.headers().set("Content-Length",response.content().readableBytes());
         return response;
     }
 
