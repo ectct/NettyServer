@@ -13,7 +13,6 @@ public class JWTUtil {
 
     public static final long EXPIRE = 1000 * 60 * 60 * 24 * 7;
 
-    // 签名哈希的密钥，对于不同的加密算法来说含义不同
     public static final String APP_SECRET = "ahda4sf151@1sd45f%#&";
 
     /**
@@ -52,7 +51,7 @@ public class JWTUtil {
 
 
     /**
-     * 根据token获取会员id
+     * 根据token获取id
      * @param jwtToken
      * @return 解析token后获得的用户id
      */

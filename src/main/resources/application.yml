@@ -1,8 +1,7 @@
-#端口号8080
 server:
   port: 8088
 
-#数据库名：mysql，用户名root，密码123456
+#数据库名：mysql，用户名root，密码123
 spring:
   datasource:
     username: root
@@ -14,3 +13,5 @@ spring:
 mybatis-plus:
   # xml文件位置
   mapper-locations: classpath:mapper/*.xml
+
+mailpassword: 123
