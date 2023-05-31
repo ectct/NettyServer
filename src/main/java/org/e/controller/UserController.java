@@ -2,8 +2,10 @@ package org.e.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import org.e.entity.Questionnaire;
 import org.e.entity.User;
 import org.e.entity.UserInfo;
+import org.e.service.QuestionnaireService;
 import org.e.service.UserInfoService;
 import org.e.service.UserService;
 import org.e.utils.JWTUtil;
@@ -20,6 +22,8 @@ public class UserController {
     UserService userService;
     @Autowired
     UserInfoService userInfoService;
+    @Autowired
+    QuestionnaireService questionnaireService;
 
     public JSONObject select(String uri, JSONObject json) {
         switch (uri) {
@@ -33,13 +37,33 @@ public class UserController {
             //订阅传感器
             case "/subscribe":
                 return subscribe(json);
+            //用户数据
             case "/user/add":
                 return setUserInfo(json);
             case "/user/get":
                 return getUserInfo(json);
+            case "/questionnaire":
+                return questionnaire(json);
             default:
                 return null;
         }
+    }
+
+    private JSONObject questionnaire(JSONObject input) {
+        Integer id = JWTUtil.getMemberIdByJwtToken(input.getString("cookie"));
+        Questionnaire questionnaire = new Questionnaire();
+        questionnaire.setId(id);
+        questionnaire.setMood(input.getString("mood"));
+        questionnaire.setAppetite(input.getString("appetite"));
+        questionnaire.setSport(input.getString("sport"));
+        if (questionnaireService.getById(id) != null) {
+            questionnaireService.updateById(questionnaire);
+        } else {
+            questionnaireService.save(questionnaire);
+        }
+        JSONObject res = new JSONObject();
+        status(res);
+        return res;
     }
 
     private JSONObject getUserInfo(JSONObject input) {
@@ -47,19 +71,25 @@ public class UserController {
         Integer id = JWTUtil.getMemberIdByJwtToken(input.getString("cookie"));
         UserInfo userInfo = userInfoService.getById(id);
         JSONObject res = (JSONObject) JSONObject.toJSON(userInfo);
+        if (res==null) {
+            res = new JSONObject();
+            status(res, false, "无信息");
+            return res;
+        }
         status(res);
         return res;
     }
 
     private JSONObject setUserInfo(JSONObject input) {
         UserInfo userInfo = new UserInfo();
+        JSONObject credentials = (JSONObject) input.get("credentials");
         Integer id = JWTUtil.getMemberIdByJwtToken(input.getString("cookie"));
         userInfo.setId(id);
-        userInfo.setName(input.getString("name"));
-        userInfo.setAge((Integer) input.get("age"));
-        userInfo.setSex(input.getString("sex"));
-        userInfo.setHeight((Double) input.get("height"));
-        userInfo.setWeight((Double) input.get("weight"));
+        userInfo.setName(credentials.getString("name"));
+        userInfo.setAge(Integer.valueOf(credentials.getString("age")));
+        userInfo.setSex(credentials.getString("sex"));
+        userInfo.setHeight(Double.valueOf(credentials.getString("height")));
+        userInfo.setWeight(Double.valueOf((credentials.getString("weight"))));
         if (userInfoService.getById(id) != null) {
             userInfoService.updateById(userInfo);
         } else {
@@ -74,7 +104,6 @@ public class UserController {
         Integer userId = JWTUtil.getMemberIdByJwtToken(input.getString("cookie"));
         String string = input.getString("subscribe");
         List<Integer> subscribe = JSONObject.parseArray(string, Integer.class);
-
         userService.updateSenor(userId, subscribe);
         JSONObject res = new JSONObject();
         status(res);
@@ -94,7 +123,6 @@ public class UserController {
             jsonObject.put("cookie", token);
             status(jsonObject);
         }
-        System.out.println(jsonObject.toJSONString());
         return jsonObject;
     }
 

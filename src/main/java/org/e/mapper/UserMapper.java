@@ -20,4 +20,6 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
     @Select("select sensor_id from user_sensor where user_id=#{id}")
     public List<Integer> getSensorId(Integer id);
+    @Select("select user_id from user_sensor where sensor_id=#{id} limit 1")
+    public Integer getUserId(Integer id);
 }

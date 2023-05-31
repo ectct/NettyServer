@@ -84,4 +84,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userSensorMapper.insert(userSensor);
         }
     }
+    @Override
+    public String getMail(Integer id) {
+        User user = userMapper.selectById(id);
+        if (user==null) {
+            return null;
+        }
+        return user.getMail();
+
+    }
+    @Override
+    public Integer getUserId(Integer id) {
+        return userMapper.getUserId(id);
+    }
 }

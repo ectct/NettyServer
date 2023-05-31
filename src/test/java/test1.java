@@ -31,19 +31,11 @@ public class test1 {
     }
     @Test
     public void f3() {
-        Monitor monitor = new Monitor();
-        monitor.setId(1);
-        monitor.setHumidity(2.2F);
-        monitor.setTime(new Date());
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(2);
-        arrayList.add(3);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("monitor", monitor);
-        jsonObject.put("li", arrayList);
-        System.out.println(((ArrayList<Integer>) jsonObject.get("li")).get(0));
-        System.out.println(((JSONObject) JSONObject.toJSON(monitor)).toJSONString());
-        System.out.println(JSONObject.toJSONString(monitor));
+        String s = "{a:1, b:{c:1}}";
+        JSONObject jsonObject = JSONObject.parseObject(s);
+        JSONObject b = (JSONObject) jsonObject.get("b");
+
+        System.out.println(b.get("c"));
     }
     @Test
     public void f4() {

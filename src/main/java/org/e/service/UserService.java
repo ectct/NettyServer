@@ -22,4 +22,8 @@ public interface UserService extends IService<User> {
     JSONObject getSensorById(Integer id);
 
     void updateSenor(Integer userId, List<Integer> subscribe);
+
+    String getMail(Integer id);
+
+    Integer getUserId(Integer id);
 }
