@@ -13,7 +13,7 @@ import java.util.Properties;
 public class MailHandle {
 
     private final String myEmailAccount = "lqm5823@163.com";
-    private final String myEmailPassword = "wanlongyi";
+    private final String myEmailPassword = "";
 
     private final String myEmailSMTPHost = "smtp.163.com";
 
